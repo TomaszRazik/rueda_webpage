@@ -1,0 +1,17 @@
+.btp {
+  padding: 100px;
+}
+
+.main {
+  color: white;
+  background-color: black
+}
+
+.colored {
+  background-color:#FF4500;
+  color: white;
+}
+
+.the-table {
+    word-wrap: break-word;
+}

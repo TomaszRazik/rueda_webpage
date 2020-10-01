@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load has_group %}
+{% load static %}
+{% block body_block %}
+
+{% if user.is_authenticated %}
+
+<div class="">
+  <img src="{% static 'images/salsa.jpg' %}"  class="rounded img-fluid img-thumbnail mx-auto" alt="">
+</div>
+<div>
+<h1 class="pb-2 pt-5">Słowniczek:</h1>
+
+{% if dictionary_table %}
+  <table class='table table-hover the-table mx-auto' style="color:white; background-color:#0f486c">
+    <thead class="colored">
+      <tr class="">
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Link</th>
+        {% if request.user|has_group:'admin_group' or user.is_superuser %}
+        <th></th>
+        {% endif %}
+      </tr>
+    </thead>
+    {% for word in dictionary_table %}
+      <tr>
+        <td><b>{{ word.name }}</b></td>
+        <td>{{ word.description }}</td>
+        {% if word.url %}
+          <td><a href="{{ word.url }}">Wideo</a></td>
+          {% else %}
+          <td>N/A</td>
+          {%endif%}
+          {% if request.user|has_group:'admin_group' or user.is_superuser %}
+        <td><button type="button" class="btn btn-danger" onclick="location.href='{% url 'figures:delete_word' pk=word.id %}'">Usuń</button></td>
+          {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <h3>Brak pozycji w bazie danych.</h3>
+{% endif %}
+
+{% if request.user|has_group:'admin_group' or user.is_superuser %}
+<div class="">
+  <button type="button" class='btn btn-primary' onclick="location.href='{% url 'figures:create_word' %}'">Dodaj pozycję</button>
+</div>
+{% endif %}
+</div>
+
+<div class="py-5">
+
+<h1 class="pb-2">Figury:</h1>
+
+{% if figures_table %}
+  <table class='table the-table table-hover'style="color:white; background-color:#0f486c">
+    <thead class="colored">
+      <tr class="">
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Link</th>
+        {% if request.user|has_group:'admin_group' or user.is_superuser %}
+          <th></th>
+        {% endif %}
+      </tr>
+    </thead>
+    {% for figure in figures_table %}
+      <tr>
+        <td><b>{{ figure.name }}</b></td>
+        <td>{{ figure.description }}</td>
+        {% if figure.url %}
+          <td><a href="{{ figure.url }}">Wideo</a></td>
+          {% else %}
+          <td>N/A</td>
+          {%endif%}
+          {% if request.user|has_group:'admin_group' or user.is_superuser %}
+            <td><button type="button" class="btn btn-danger" onclick="location.href='{% url 'figures:delete_figure' pk=figure.id %}'">Usuń</button></td>
+          {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <h3>Brak pozycji w bazie danych.</h3>
+{% endif %}
+
+{% if request.user|has_group:'admin_group' or user.is_superuser %}
+<div class="">
+  <button type="button" class='btn btn-primary' onclick="location.href='{% url 'figures:create_figure' %}'">Dodaj pozycję</button>
+</div>
+{% endif %}
+</div>
+
+{% else %}
+<h1>Zaloguj się aby zobaczyć zawartość</h1>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+<h1 class="color">Chcesz usunąć {{ object.name }}?</h1>
+
+<form class="" method="post">
+  {% csrf_token %}
+  <input type="submit" class="btn btn-danger" value="Usuń">
+  <button type="button" class="btn btn-primary" onclick="location.href='{% url 'figures:tables'%}'" name="button">Anuluj</button>
+
+</form>
+
+{% endblock %}

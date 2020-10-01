@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body_block %}
+  <div class="jumbotron" style="background-color:#FF4500;">
+    {% if user.is_authenticated %}
+      <h1 class="" >Witaj {{user.username}}!</h1>
+      <h4>Aby przejść do zawartości kliknij odpowiedni link na górze strony</h4>
+    {% else %}
+      <h1 class="py-5" >Witaj na stronie grupy "Salsa pod chmurką"!</h1>
+      <h4>Zaloguj się aby zobaczyć zawartość.</h4>
+    {% endif %}
+  </div>
+{% endblock %}
